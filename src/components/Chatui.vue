@@ -51,6 +51,12 @@ export default {
             switch( type ){
                 case "text": 
                     this.inputComponent.name = "chatui-input-text";
+                    break;
+                case "select": 
+                    this.inputComponent.name = "chatui-input-select";
+                    this.inputComponent.options = options;
+                    break;
+                default: this.inputComponent.name = "";
             }
         },
         userInput( type ){
