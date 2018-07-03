@@ -1,13 +1,22 @@
 {
-  "name": "vue-chatui",
+  "name": "@daniel-ordonez/vue-chatui",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build-vue": "vue-cli-service build",
-    "build-npm": "webpack --config webpack.config.js --optimize-minimize",
+    "build-bundle": "vue-cli-service build --target lib --name VueChatui ./src/components/Chatui.vue",
     "lint": "vue-cli-service lint"
   },
+  "main": "./dist/VueChatui.common.js",
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js",
+    "screenshots/*"
+  ],
   "dependencies": {
     "vue": "^2.5.16"
   },

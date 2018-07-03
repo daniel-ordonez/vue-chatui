@@ -1,7 +1,9 @@
 # Vue ChatUI
 A Vuejs component with no external dependencies for creating conversational UIs based on 2-way chat.
 
-![vue-chatui screenshot](./chatui.PNG)
+>WARNING: Still under development!
+
+![vue-chatui screenshot](./screenshots/sample.PNG)
 ## Table of contents
 * [Installation](#installation)
 * [Usage](#usage)
