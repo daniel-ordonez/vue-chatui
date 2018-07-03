@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build-vue": "vue-cli-service build",
+    "build-npm": "webpack --config webpack.config.js --optimize-minimize",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -14,7 +15,9 @@
     "@vue/cli-plugin-babel": "^3.0.0-rc.3",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.3",
     "@vue/cli-service": "^3.0.0-rc.3",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.14.0",
+    "webpack-cli": "^3.0.8"
   },
   "eslintConfig": {
     "root": true,

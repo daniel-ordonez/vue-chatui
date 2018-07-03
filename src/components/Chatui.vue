@@ -27,6 +27,7 @@ export default {
         chatuiEntry,
         chatuiInputText
     },
+    name:'vue-chatui',
     data(){
         return{
             chatEntries: [],
