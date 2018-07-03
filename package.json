@@ -2,6 +2,7 @@
   "name": "@daniel-ordonez/vue-chatui",
   "version": "0.1.2",
   "private": false,
+  "license": "GNU",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build-vue": "vue-cli-service build",
