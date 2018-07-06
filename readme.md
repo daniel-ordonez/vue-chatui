@@ -1,5 +1,7 @@
 # Vue ChatUI
 
+[![npm version][0]][1]
+
 A Vuejs component for creating conversational UIs based on simple 2-way chat.
 
 ![vue-chatui screenshot](https://raw.githubusercontent.com/daniel-ordonez/vue-chatui/master/screenshots/sample.PNG)
@@ -146,9 +148,9 @@ It works the same as _userInput_ but the Promise resolves right after the user s
 
 ## Support
 
-Please [open an issue](https://github.com/daniel-ordonez/vue-chatui/issuess/new) for support.
+Please [open an issue](https://github.com/daniel-ordonez/vue-chatui/issues/new) for support.
 
->Be aware that some features are under development
+>Be aware that some features may be under development
 
 ## Contributing
 
@@ -159,10 +161,13 @@ Please [open an issue](https://github.com/daniel-ordonez/vue-chatui/issuess/new)
 
 ## License
 
-GNU General Public License
+[GNU](https://tldrlegal.com/license/gnu) General Public License
 
 ## Buy me a coffee
 
 <a href="https://www.buymeacoffee.com/danielordonez" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 Yay! 🎉 You reached the end.
+
+[0]: https://img.shields.io/badge/npm-0.1.4-lightgrey.svg
+[1]: https://www.npmjs.com/package/@daniel-ordonez/vue-chatui
