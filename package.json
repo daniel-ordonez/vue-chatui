@@ -2,6 +2,10 @@
   "name": "@daniel-ordonez/vue-chatui",
   "version": "0.1.4",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daniel-ordonez/vue-chatui"
+  },
   "license": "GNU",
   "keywords": [
     "Vuejs",
