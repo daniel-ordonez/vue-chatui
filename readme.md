@@ -169,5 +169,5 @@ Please [open an issue](https://github.com/daniel-ordonez/vue-chatui/issues/new) 
 
 Yay! 🎉 You reached the end.
 
-[0]: https://img.shields.io/badge/npm-0.1.4-lightgrey.svg
+[0]: https://img.shields.io/badge/npm-0.1.5-lightgrey.svg
 [1]: https://www.npmjs.com/package/@daniel-ordonez/vue-chatui
