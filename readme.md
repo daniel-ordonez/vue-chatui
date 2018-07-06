@@ -1,8 +1,8 @@
 # Vue ChatUI
 
-[![npm version][0]][1]
-
 A Vuejs component for creating conversational UIs based on simple 2-way chat.
+
+[![npm version][0]][1]
 
 ![vue-chatui screenshot](https://raw.githubusercontent.com/daniel-ordonez/vue-chatui/master/screenshots/sample.PNG)
 ## Table of contents
