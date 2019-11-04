@@ -1,142 +1,146 @@
 <template>
-    <div id="chatui">
-        <div class="chatui-entries" :ref="`chatEntries`">
-            <chatui-entry v-for="(data, index) in chatEntries" 
-            :key="index"
-            :data="data"
-            @mounted="entryPoped"
-            > 
-            </chatui-entry>
-        </div>
-        <div class="chatui-inputs">
-            <component 
-            :is="inputComponent.name" 
-            :options="inputComponent.options" 
-            :ref="`inputComponent`"
-            @submit="input"
-            ></component>
-        </div>
+  <div class="chatui">
+    <div class="chatui_entries" :ref="`chatEntries`">
+      <chatui-entry v-for="(data, index) in entries" 
+        :key="`entry-${index}`"
+        :data="data"
+        @mounted="entryPopped"
+      > 
+      </chatui-entry>
     </div>
+    <div class="chatui_inputs">
+      <component 
+        :is="input.type" 
+        :data="input.data" 
+        :ref="`inputComponent`"
+        @submit="onInput"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-import chatuiEntry from './Chatui-Entry.vue';
-import chatuiInputText from './Chatui-Input-Text.vue';
+import ChatuiEntry from './chatui/Entry'
+import ChatuiInputText from './chatui/InputText'
+import ChatuiInputSelect from './chatui/InputSelect'
+const BASE_ENTRY = { text: '', user: false, loading: true }
 export default {
-    components:{
-        chatuiEntry,
-        chatuiInputText
-    },
-    name:'vue-chatui',
-    data(){
-        return{
-            chatEntries: [],
-            userPromises: null,
-            inputComponent: {
-                "name":"",
-                "options":{
-                    defaults:{
-                        user:true,
-                        loading: false,
-                    }
-                }
-            },
-        }
-    },
-    methods:{
-        input( data ){
-            typeof this.onInput === "function" && this.onInput( data );
-            this.inputComponent.name = "";
-        },
-        setInputComponent( type, options ){
-            switch( type ){
-                case "text": 
-                    this.inputComponent.name = "chatui-input-text";
-                    break;
-                case "select": 
-                    this.inputComponent.name = "chatui-input-select";
-                    this.inputComponent.options = options;
-                    break;
-                default: this.inputComponent.name = "";
-            }
-        },
-        userInput( type ){
-            this.setInputComponent( type );
-            return new Promise((resolve)=>{
-                this.onInput = async ( data ) => {
-                    let obj = this.addEntry( data );
-                    await obj.readable;
-                    resolve(obj);
-                }
-            });
-        },
-        getUserInput( type ){
-            this.setInputComponent( type );
-            return new Promise((resolve)=>{
-                this.onInput = ( data ) => {
-                    resolve( data );
-                }
-            });
-        },
-        addEntry( text ){
-            let obj = { "text":"", "user":false, "loading":true, "timeout":500 }
-            if( typeof text === "string" ){
-                obj.text = text
-            }else if( typeof text === "object" ){
-                obj = Object.assign( obj, text );
-            }
-            this.chatEntries.push( obj );
-            obj.readable = new Promise((resolve)=>{
-                obj.onReadable = () => resolve(); //called by chatui-entry component onReadable function
-            });
-            return obj;
-        },
-        entryPoped(entry){
-            entry.scrollIntoView();
-        }
-    },
-    mounted(){
-        const hideScroll = (el) => {
-            let scrollWidth = el.offsetWidth - el.clientWidth;
-            el.style.marginRight = -scrollWidth + "px";
-        }
-        hideScroll( this.$refs.chatEntries );
+  name:'chatui',
+  props: {
+    loadingTimeout: { type: Number, default: 500 }
+  },
+  components:{
+    ChatuiEntry,
+    ChatuiInputText,
+    ChatuiInputSelect
+  },
+  data(){
+    return{
+      entries: [],
+      input: {
+        type: '',
+        data: '',
+        resolve: null
+      }
     }
+  },
+  methods:{
+    addEntry (content) {
+      let {loadingTimeout} = this
+      let entry = {...BASE_ENTRY, loadingTimeout}
+      if (typeof content === "string") {
+        entry.text = content
+      } else if (typeof content === "object") {
+        entry = {...entry, ...content}
+      }
+      this.entries.push(entry)
+      entry.readable = new Promise( resolve => { entry.makeReadable = resolve })
+      return entry
+    }, 
+    /**
+     * type:String [text, select]
+     * data:Object [{placeholder:String, options:String[]}]
+     *  */   
+    userInput (type = 'text', data) {
+      // Updates input component
+      type = `chatui-input-${type}`
+      this.input = {type, data, resolve: null}
+      // Promise resolves when input component submits and that entry is readable
+      return new Promise( resolve => {
+        this.input.resolve = async data => {
+          let obj = this.addEntry(data)
+          await obj.readable
+          resolve(obj)
+        }
+      })
+    },  
+    getUserInput (type = 'text', data) {
+      // Updates input component
+      type = `chatui-input-${type}`
+      this.input = {type, data, resolve: null}
+      // Promise resolves when input component submits without making an entry
+      return new Promise( resolve => {
+        this.input.resolve = async data => {
+          resolve(data)
+        }
+      })
+    },
+    onInput (data) {
+      this.$emit('input', data)
+      this.input.type = ''
+      this.input.resolve(data)
+    },
+    entryPopped(entry){
+      entry.scrollIntoView()
+    }
+  },
+  mounted(){
+    const hideScroll = (el) => {
+      let scrollWidth = el.offsetWidth - el.clientWidth
+      el.style.marginRight = -scrollWidth + "px"
+    }
+    hideScroll(this.$refs.chatEntries)
+  }
 }
 </script>
 
 <style>
-#chatui{
-    width: 100%;
-    height: 100%;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: calc( 300px + 3rem );
-
-    overflow: hidden;
-    position: relative;
+.chatui{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+  position: relative;
 }
-.chatui-entries{
-    display: flex;
-    flex-direction: column;
-    height: calc( 100% - 3em );
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 3em;
-    overflow-y: scroll;
+.chatui_entries{
+    display: grid;
+    grid-auto-flow: row;
+    grid-auto-rows: min-content;
+    grid-row-gap: var(--chat--row-gap, .618em);
+    overflow-y: auto;
     padding: 8px;
-    box-sizing: border-box;
+    position: relative;
+    background: white;
 }
-.chatui-inputs{
-    border-top: solid 0.5px rgba(0,0,0,0.16);
-    padding-top: 0.5rem;
+.chatui_inputs{
+  border-top: solid 0.5px rgba(0,0,0,0.16);
+  padding-top: 0.5rem;
+  min-height: 3em;
+}
+
+@supports(mix-blend-mode: screen) {
+  .chatui_entries:after {
+    content: '';
     position: absolute;
     left: 0;
-    right: 0;
-    bottom: 0;
-    height: 3em;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background:linear-gradient(135deg, #184e68 0%,#57ca85 100%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
 }
 </style>
