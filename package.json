@@ -32,15 +32,15 @@
     "screenshots/*"
   ],
   "dependencies": {
-    "vue": "^2.5.16"
+    "vue": "^2.6.10"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-rc.3",
-    "@vue/cli-plugin-eslint": "^3.0.0-rc.3",
-    "@vue/cli-service": "^3.0.0-rc.3",
-    "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8"
+    "@vue/cli-plugin-babel": "^3.12.1",
+    "@vue/cli-plugin-eslint": "^3.12.1",
+    "@vue/cli-service": "^3.12.1",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "eslintConfig": {
     "root": true,
