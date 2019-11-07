@@ -33,15 +33,18 @@ export default {
       let {text} = await chat.userInput("select", ['Yes', 'No'])
       if (text === 'No') {
         await  chat.addEntry('... OK, everbody makes mistakes').readable
-        chat.addEntry({
+        await chat.addEntry({
           img: 'https://media.giphy.com/media/rYEAkYihZsyWs/giphy.gif'
-        })
+        }).readable
       } else {
-        chat.addEntry({
+        await chat.addEntry({
           img: 'https://media.giphy.com/media/9GIuYF4OoqwGTE7oUd/giphy.gif',
           text: 'OK 👌'
-        })
+        }).readable
       }
+      await chat.addEntry({
+        html: `Wanna try the NPM package? go <a href="https://www.npmjs.com/package/@daniel-ordonez/vue-chatui">here</a>`
+      })
     }
   },
   mounted() {
