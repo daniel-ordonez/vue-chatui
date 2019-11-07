@@ -1,5 +1,5 @@
 <template>
-    <div class="chatui-entry-loading">
+    <div class="chatui-entry-loading chatui-entry-text">
         <div class="dots">
             <span>.</span>
             <span>.</span>
