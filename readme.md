@@ -21,14 +21,14 @@ A Vuejs component for creating conversational UIs based on simple 2-way chat.
 <link rel="stylesheet" href="./VueChatui.css">
 <!-- add the component tag -->
 <div id="app">
-  <chatui></chatui>
+  <vue-chatui></vue-chatui>
 </div>
 <!-- instantiate your Vue app and add component -->
 <script>
 // VueChatui is globally accessible
 new Vue({
   components: {
-    chatui: VueChatui
+    VueChatui: VueChatui
   }
 }).$mount('#app')
 </script>
@@ -39,7 +39,7 @@ Import the package
 ```node
 npm i @daniel-ordonez/vue-chatui
 ```
-Regiser the component
+Register the component in Vue
 ```javascript
 import { VueChatui } from '@daniel-ordonez/vue-chatui';
 export default{
@@ -56,42 +56,42 @@ Use the component tag
 ```
 
 ## Usage
-To easy access your component I recommend using the reference attribute
+To access your component easily use the ref attribute
 ```html
-<vue-chatui ref="chatui"></vue-chatui>
+<vue-chatui ref="chat"></vue-chatui>
 ```
 
-Then assign your component to a variable
+Then assign it to a variable
 ```javascript
 // 'this' is your Vue instance
-let chat = this.$refs.chatui;
+let {chat} = this.$refs;
 ```
 
 ### Adding text programatically
 ```javascript
 //Passing a plain string will add a new text bubble at the left
-chat.addEntry("Hello from left!");
+chat.addEntry("Bot says hello!");
 //You can pass an object with the property 'user:true' to add the bubble at the right
-chat.addEntry( { text : "Hello from right!", user : true } );
+chat.addEntry( { text : "User says hi!", user : true } );
 ```
 
 The function addEntry accepts either a string or an object with the following structure:
 
 | Property | Type     | Description |
 |----------|----------|-------------|
-|text      |String    |the text shown the chat bubble|
+|text      |String    |the text to show in the chat bubble|
 |user      |Boolean   |if true the chat bubble will appear at the right|
-|loading   |Boolean   |if true shows three dots animation in the chat bubble instead of text |
-|timeout   |Number    |time in ms that animation is shown when loading, after the time pass loading is set to false, and text becomes readable|
+|loading   |Boolean   |if true shows a three dots animation in the chat bubble instead of text until the loadingTimeout expires |
+|loadingTimeout   |Number    |time in milliseconds to show the animation when loading, after that loading is set to false, and text becomes readable|
 
 If it's given a string, the rest attributes will set to defult
-`{ user: false, loading: true, timeout: 500 }`
+`{ user: false, loading: true, loadingTimeout: 500 }`
 
-The **_addEntry_** function returns the and new object with the same attributes plus a new one
+The **_addEntry_** function returns a new object with the same attributes plus a new one
 
 | Property | Type     | Description |
 |----------|----------|-------------|
-|readable  |Promise   |resolves when the text is visible in the chat bubble|
+|readable  |Promise   |if loading, resolves after loadingTimeout when the text becomes visible, else, resolves immediately|
 
 
 ### User input text
@@ -100,11 +100,11 @@ The **_addEntry_** function returns the and new object with the same attributes 
 chat.userInput("text");
 ```
 
-When the user submits (by pressing Enter / keycode:13), the text is put into an object and _addEntry_ is called
+When the user submits (by pressing the send button), the text is put into an object (data) and _addEntry_ is called
 ```javascript
 /*
 data = {
- text: whatever the user typed,
+ text: <whatever the user typed>,
  user: true,
  loading: false
 }
@@ -112,7 +112,7 @@ data = {
 addEntry(data);
 ```
 
-All that is made under the hood, **_userInput_** returns a Promise that resolves after the new chat bubble with the user's text is readable. 
+All that is made under the hood, **_userInput_** returns a Promise that resolves after the new chat bubble with the user text is readable. 
 
 ### Using with async/await
 ```javascript
@@ -120,7 +120,7 @@ async talk = (chat) => {
   //Use the readable promise
   await chat.addEntry("What's your name?").readable;
   let name = await chat.userInput("text");
-  //userInput returns an object after the user's input is visible
+  //userInput returns an object after the user submits a response
   await chat.addEntry(`Nice to meet you ${name.text}`).readable;
   console.log("done");
 }
@@ -131,7 +131,7 @@ If you want to only capture the user's input without adding a new entry, use **_
 ```javascript
 async talk = (chat) => {
   await chat.addEntry("Tell me a secret").readable;
-  let secret = await chat.getUserInput("text");
+  let secret = await chat.getUserInput();
   //storeSecure( secret.text );
   await chat.addEntry("Your secret is safe with me").readable;
   console.log("done");
@@ -140,7 +140,7 @@ async talk = (chat) => {
 It works the same as _userInput_ but the Promise resolves right after the user submits returning the object
 ```javascript
 {
- text: whatever the user typed,
+ text: <whatever the user typed>,
  user: true,
  loading: false
 }
@@ -169,5 +169,5 @@ Please [open an issue](https://github.com/daniel-ordonez/vue-chatui/issues/new) 
 
 Yay! 🎉 You reached the end.
 
-[0]: https://img.shields.io/badge/npm-0.1.7-lightgrey.svg
+[0]: https://img.shields.io/badge/npm-0.2-lightgrey.svg
 [1]: https://www.npmjs.com/package/@daniel-ordonez/vue-chatui

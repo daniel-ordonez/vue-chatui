@@ -20,16 +20,27 @@ export default {
       await  chat.addEntry("Yo!").readable
       await chat.addEntry("Try typing something down bellow.").readable
       await chat.userInput("text")
-      await chat.addEntry("Now, I'm gonna caputure your input").readable
-      await chat.addEntry("Now try typing something else").readable
+      await chat.addEntry("Now, try typing something else").readable
+      await chat.addEntry({
+        img: 'https://media.giphy.com/media/ZZu3MCdRI3LJm/giphy.gif',
+        text: "I'm gonna caputure your input"
+      }).readable
       let input = await chat.getUserInput("text")
-      await chat.addEntry({html: `So, you wanted to say: <i><b>${input.text}</b></i>`}).readable
+      await chat.addEntry({
+        html: `Here's what you typed: <i><b>${input.text}</b></i>`
+      }).readable
       await chat.addEntry("Is that correct?").readable
       let {text} = await chat.userInput("select", ['Yes', 'No'])
       if (text === 'No') {
-        await  chat.addEntry("... OK, everbody makes mistakes").readable
+        await  chat.addEntry('... OK, everbody makes mistakes').readable
+        chat.addEntry({
+          img: 'https://media.giphy.com/media/rYEAkYihZsyWs/giphy.gif'
+        })
       } else {
-        await  chat.addEntry("OK 👌").readable
+        chat.addEntry({
+          img: 'https://media.giphy.com/media/9GIuYF4OoqwGTE7oUd/giphy.gif',
+          text: 'OK 👌'
+        })
       }
     }
   },

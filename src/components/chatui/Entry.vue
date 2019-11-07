@@ -4,17 +4,25 @@
       v-if="isLoading" 
       class="chatui-entry_content"
     />
-    <div 
-      v-else-if="embeddedHTML"
-      class="chatui-entry_content"  
-      v-html="embeddedHTML"
-    />
-    <div 
-      v-else
-      class="chatui-entry_content"
-    >
-      {{text}}
-    </div>
+    <template v-else>
+      <div class="chatui-entry_content">
+        <div v-if="img">
+          <img :src="img">
+        </div>
+        <div 
+          v-if="embeddedHTML"
+          v-html="embeddedHTML"
+          class="chatui-entry-text"
+        />
+        <div 
+          v-else-if="text"
+          class="chatui-entry-text"
+        >
+          {{text}}
+        </div>
+      </div>
+    </template>
+    
   </div>
 </template>
 
@@ -29,7 +37,8 @@ export default {
       isUser () { return this.data.user },
       embeddedHTML () { return typeof this.data.html === "string" ? this.data.html : false },
       isLoading () { return this.data.loading },
-      text () { return this.data.text }
+      text () { return this.data.text },
+      img () { return this.data.img }
     },
     methods:{
       scrollIntoView(){
@@ -72,18 +81,25 @@ export default {
     word-wrap: break-word;
     word-wrap: break-all;
     position: relative;
-    padding: 0.618em 1em;
     border-radius: 1.31em;
     background: var(--chat--entry-bg-color, #eee);
     color: black;
     min-width: 1em;
     min-height: 1em;
     z-index: 1;
+    overflow: hidden;
+}
+.chatui-entry_content img {
+  max-width: 100%;
 }
 .chatui-entry[user] .chatui-entry_content{ 
   background: var(--chat--user-entry-bg-color, var( --chat--entry-bg-color, black));
   color: var(--chat--user-entry-text-color, white);
   z-index: 0;
+  text-align: right;
+}
+.chatui-entry-text:not(:empty) {
+  padding: 0.618em 1em;
 }
 @keyframes popin {
   from {

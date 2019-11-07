@@ -56,7 +56,7 @@ export default {
       this.entries.push(entry)
       entry.readable = new Promise( resolve => { entry.makeReadable = resolve })
       return entry
-    }, 
+    },
     /**
      * type:String [text, select]
      * data:Object [{placeholder:String, options:String[]}]
@@ -93,13 +93,6 @@ export default {
     entryPopped(entry){
       entry.scrollIntoView()
     }
-  },
-  mounted(){
-    const hideScroll = (el) => {
-      let scrollWidth = el.offsetWidth - el.clientWidth
-      el.style.marginRight = -scrollWidth + "px"
-    }
-    hideScroll(this.$refs.chatEntries)
   }
 }
 </script>
