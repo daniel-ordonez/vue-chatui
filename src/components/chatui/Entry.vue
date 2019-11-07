@@ -6,7 +6,7 @@
     />
     <template v-else>
       <div class="chatui-entry_content">
-        <div v-if="img">
+        <div v-if="img" class="chatui-entry-img">
           <img :src="img">
         </div>
         <div 
@@ -100,6 +100,10 @@ export default {
 }
 .chatui-entry-text:not(:empty) {
   padding: 0.618em 1em;
+}
+.chatui-entry-img {
+  display: flex;
+  justify-content: center;
 }
 @keyframes popin {
   from {
