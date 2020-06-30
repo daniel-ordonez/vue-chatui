@@ -1,6 +1,6 @@
 {
   "name": "@daniel-ordonez/vue-chatui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "description": "A Vuejs component for creating conversational UIs based on simple 2-way chat.",
   "repository": {
@@ -13,8 +13,7 @@
     "Vuejs",
     "Vue component",
     "Chat",
-    "Conversational UI",
-    "GNU"
+    "Conversational UI"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",

@@ -91,6 +91,7 @@ export default {
 }
 .chatui-entry_content img {
   max-width: 100%;
+  width: 100%;
 }
 .chatui-entry[user] .chatui-entry_content{ 
   background: var(--chat--user-entry-bg-color, var( --chat--entry-bg-color, black));
